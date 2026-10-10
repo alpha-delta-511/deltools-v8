@@ -20,6 +20,26 @@ import { BrowserRouter } from "react-router-dom";
 
 const theme = createTheme({
   fontFamily: "Consolas, monospace",
+
+  components: {
+    ActionIcon: {
+      defaultProps: {
+        size: "lg",
+      },
+    },
+
+    Group: {
+      defaultProps: {
+        p: "sm",
+      },
+    },
+
+    Stack: {
+      defaultProps: {
+        p: "sm",
+      },
+    },
+  },
 });
 
 const pages: Record<string, React.ComponentType> = {
@@ -42,7 +62,7 @@ function App() {
           }}
         >
           <AppShell.Header>
-            <Group justify="space-between" p="sm">
+            <Group justify="space-between">
               <Burger
                 opened={opened}
                 onClick={toggle}
@@ -53,7 +73,7 @@ function App() {
               <ActionIcon
                 component="a"
                 href="https://github.com/alpha-delta-511/deltools-v8"
-                variant="outline"
+                variant="gradient"
               >
                 <GithubLogoIcon></GithubLogoIcon>
               </ActionIcon>
@@ -61,7 +81,7 @@ function App() {
           </AppShell.Header>
 
           <AppShell.Navbar>
-            <Stack p="sm">
+            <Stack>
               <Text>*navbar*</Text>
             </Stack>
           </AppShell.Navbar>
