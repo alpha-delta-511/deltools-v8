@@ -136,7 +136,7 @@ function App() {
                 <Tree
                   tree={navbarTree}
                   data={navbarData}
-                  withLines
+
                   renderNode={(payload) => <Leaf {...payload} />}
                 ></Tree>
               </Stack>
