@@ -1,3 +1,4 @@
 a.nav_link {
     color: var(--mantine-color-text);
+    text-decoration: none;
 }
