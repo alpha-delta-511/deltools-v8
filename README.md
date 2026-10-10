@@ -6,7 +6,7 @@ Simple tools for delevopers, system administrators and other.
 
 Installing:
 
-```
+```bash
 git clone https://github.com/alpha-delta-511/deltools-v8
 cd deltools-v8
 npm install
@@ -18,7 +18,7 @@ You can run the app with vite's built-in server.
 
 1. Start development server:
 
-```
+```bash
 npm run dev
 ```
 
@@ -30,13 +30,13 @@ Or you can build the app for production and run it with other HTTP-server.
 
 1. Build the app:
 
-```
+```bash
 npm run build
 ```
 
 2. Run with python server:
 
-```
+```bash
 cd dist
 python -m http.server 8080
 ```
