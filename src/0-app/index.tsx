@@ -45,32 +45,28 @@ const theme = createTheme({
   },
 });
 
-const pages: Record<string, React.ComponentType> = {
-  welcome: lazy(() => import("../1-pages/welcome")),
-
-  test: lazy(() => import("../1-pages/test")),
-};
-
-function Leaf({ node, hasChildren, elementProps }: RenderTreeNodePayload) {
-  return (
-    <Group gap={6} {...elementProps}>
-      {hasChildren ? (
-        <Text>{node.label}</Text>
-      ) : (
-        <Link to={`/${node.value}`}>{node.label}</Link>
-      )}
-    </Group>
-  );
+interface Page {
+  title: string;
+  component: React.ComponentType;
 }
+
+const pages: Record<string, Page> = {
+  welcome: {
+    title: "Welcome page",
+    component: lazy(() => import("../1-pages/welcome")),
+  },
+
+  test: { title: "Test", component: lazy(() => import("../1-pages/test")) },
+};
 
 const navbarData = [
   { value: "welcome", label: "Welcome page" },
   {
-    label: "Programming",
+    label: "programming",
     value: "programming",
     children: [
       {
-        label: "Frontend",
+        label: "frontend",
         value: "frontend",
         children: [
           {
@@ -84,9 +80,24 @@ const navbarData = [
 ];
 
 function App() {
-  const [opened, { toggle }] = useDisclosure();
+  const [navbarOpened, { toggle: toggleNavbar, close: closeNavbar }] =
+    useDisclosure();
 
   const navbarTree = useTree({});
+
+  const Leaf = ({ node, hasChildren, elementProps }: RenderTreeNodePayload) => {
+    return (
+      <Text {...elementProps}>
+        {hasChildren ? (
+          <Text>{node.label + "/"}</Text>
+        ) : (
+          <Link onClick={closeNavbar} to={`/${node.value}`}>
+            {node.label}
+          </Link>
+        )}
+      </Text>
+    );
+  };
 
   return (
     <>
@@ -98,14 +109,14 @@ function App() {
             navbar={{
               width: "30vw",
               breakpoint: "sm",
-              collapsed: { mobile: !opened },
+              collapsed: { mobile: !navbarOpened },
             }}
           >
             <AppShell.Header>
               <Group justify="space-between">
                 <Burger
-                  opened={opened}
-                  onClick={toggle}
+                  opened={navbarOpened}
+                  onClick={toggleNavbar}
                   hiddenFrom="sm"
                   size="sm"
                 />
@@ -125,7 +136,7 @@ function App() {
                 <Tree
                   tree={navbarTree}
                   data={navbarData}
-
+                  withLines
                   renderNode={(payload) => <Leaf {...payload} />}
                 ></Tree>
               </Stack>
@@ -134,15 +145,15 @@ function App() {
             <AppShell.Main>
               <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                  {Object.entries(pages).map(([path, Component]) => (
+                  {Object.entries(pages).map(([path, page]) => (
                     <Route
                       key={path}
                       path={`/${path}`}
-                      element={<Component />}
+                      element={<page.component />}
                     />
                   ))}
 
-                  <Route path="/" element={<pages.welcome />}></Route>
+                  <Route path="/" element={<pages.welcome.component />}></Route>
                 </Routes>
               </Suspense>
             </AppShell.Main>
