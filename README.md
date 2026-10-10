@@ -16,27 +16,33 @@ npm install
 
 ##### 1. Run in development mode (simpler):
 
-You can run the app with vite's built-in server:
+You can run the app with vite's built-in server.
+
+1. Start development server:
 
 ```
 npm run dev
 ```
 
+2. Open `http://localhost:5173` in your browser.
+
 ##### 2. Build for production (recommended):
 
 Or you can build the app for production and run it with other HTTP-server.
+
+1. Build the app:
 
 ```
 npm run build
 ```
 
-Run with python server:
+2. Run with python server:
 
 ```
 cd dist
 python -m http.server 8080
 ```
 
-Then, open `http://localhost:8080` in your browser.
+3. Open `http://localhost:8080` in your browser.
 
 (you can also use [simple-http-server](https://github.com/TheWaWaR/simple-http-server) for this method).
