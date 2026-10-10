@@ -53,17 +53,15 @@ const theme = createTheme({
 });
 
 interface Page {
-  title: string;
   component: React.ComponentType;
 }
 
 const pages: Record<string, Page> = {
   welcome: {
-    title: "Welcome page",
     component: lazy(() => import("../1-pages/welcome")),
   },
 
-  test: { title: "Test", component: lazy(() => import("../1-pages/test")) },
+  test: { component: lazy(() => import("../1-pages/test")) },
 };
 
 const navbarData = [
