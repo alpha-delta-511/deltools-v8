@@ -42,6 +42,12 @@ const theme = createTheme({
         p: "sm",
       },
     },
+
+    Text: {
+      defaultProps: {
+        component: "span",
+      },
+    },
   },
 });
 
