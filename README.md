@@ -12,9 +12,7 @@ cd deltools-v8
 npm install
 ```
 
-### Running variants
-
-##### 1. Run in development mode (simpler):
+### Variant 1. Run in development mode (simpler):
 
 You can run the app with vite's built-in server.
 
@@ -26,7 +24,7 @@ npm run dev
 
 2. Open `http://localhost:5173` in your browser.
 
-##### 2. Build for production (recommended):
+### Variant 2. Build for production (more recommended):
 
 Or you can build the app for production and run it with other HTTP-server.
 
