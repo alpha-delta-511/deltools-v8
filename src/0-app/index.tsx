@@ -4,6 +4,7 @@ import {
   Burger,
   createTheme,
   Group,
+  Loader,
   MantineProvider,
   Stack,
   Text,
@@ -152,19 +153,24 @@ function App() {
             </AppShell.Navbar>
 
             <AppShell.Main>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Routes>
-                  {Object.entries(pages).map(([path, page]) => (
-                    <Route
-                      key={path}
-                      path={`/${path}`}
-                      element={<page.component />}
-                    />
-                  ))}
+              <Stack justify="center" style={{ overflowY: "auto" }}>
+                <Suspense fallback={<Loader type="bars" />}>
+                  <Routes>
+                    {Object.entries(pages).map(([path, page]) => (
+                      <Route
+                        key={path}
+                        path={`/${path}`}
+                        element={<page.component />}
+                      />
+                    ))}
 
-                  <Route path="/" element={<pages.welcome.component />}></Route>
-                </Routes>
-              </Suspense>
+                    <Route
+                      path="/"
+                      element={<pages.welcome.component />}
+                    ></Route>
+                  </Routes>
+                </Suspense>
+              </Stack>
             </AppShell.Main>
           </AppShell>
         </BrowserRouter>
