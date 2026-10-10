@@ -5,6 +5,8 @@ import {
   createTheme,
   Group,
   MantineProvider,
+  Stack,
+  Text,
   Title,
 } from "@mantine/core";
 
@@ -40,7 +42,7 @@ function App() {
           }}
         >
           <AppShell.Header>
-            <Group justify="space-between">
+            <Group justify="space-between" p="sm">
               <Burger
                 opened={opened}
                 onClick={toggle}
@@ -58,7 +60,11 @@ function App() {
             </Group>
           </AppShell.Header>
 
-          <AppShell.Navbar>*navbar*</AppShell.Navbar>
+          <AppShell.Navbar>
+            <Stack p="sm">
+              <Text>*navbar*</Text>
+            </Stack>
+          </AppShell.Navbar>
 
           <AppShell.Main>
             <BrowserRouter>
