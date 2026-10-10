@@ -43,6 +43,8 @@ const theme = createTheme({
 });
 
 const pages: Record<string, React.ComponentType> = {
+  welcome: lazy(() => import("../1-pages/welcome")),
+
   test: lazy(() => import("../1-pages/test")),
 };
 
@@ -97,6 +99,8 @@ function App() {
                       element={<Component />}
                     />
                   ))}
+
+                  <Route path="/" element={<pages.welcome />}></Route>
                 </Routes>
               </Suspense>
             </BrowserRouter>
