@@ -97,7 +97,11 @@ function App() {
         {hasChildren ? (
           <Text>{node.label + "/"}</Text>
         ) : (
-          <Link onClick={closeNavbar} to={`/${node.value}`}>
+          <Link
+            className="nav_link"
+            onClick={closeNavbar}
+            to={`/${node.value}`}
+          >
             {node.label}
           </Link>
         )}
