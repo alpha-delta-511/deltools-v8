@@ -8,7 +8,7 @@ import {
   useCombobox,
 } from "@mantine/core";
 import sodium from "libsodium-wrappers-sumo";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ALGORITHM_LIST, selectHasher } from "../../../5-shared/lib/hashing";
 await sodium.ready;
 
@@ -28,17 +28,39 @@ export default function Hasher() {
 
   const [hashInput, setHashInput] = useState("");
 
-  const [hashResult, setHashResult] = useState("");
+  const [hashResultBase64, setHashResultBase64] = useState("");
+  const [hashResultHex, setHashResultHex] = useState("");
 
-  const hash = (value: string) => {
-    setHashInput(value);
+  const hashInputRef = useRef(hashInput);
+  useEffect(() => {
+    hashInputRef.current = hashInput;
+  }, [hashInput]);
 
-    const hasher = selectHasher(hashFunctionName);
-    const hash = hasher(value);
+  const hashFunctionRef = useRef(hashFunctionName);
+  useEffect(() => {
+    hashFunctionRef.current = hashFunctionName;
+  }, [hashFunctionName]);
 
-    setHashResult(
-      `Hex: ${sodium.to_hex(hash)}\nBase64:${sodium.to_base64(hash)}`,
-    );
+  const hash = () => {
+    const input = hashInputRef.current;
+    if (input == "") {
+      setHashResultBase64("");
+      setHashResultHex("");
+
+      return;
+    }
+
+    const hasher = selectHasher(hashFunctionRef.current);
+    const hashResult = hasher(input);
+
+    setHashResultBase64(sodium.to_base64(hashResult));
+    setHashResultHex(sodium.to_hex(hashResult));
+  };
+
+  const [hashingTimeout, setHashingTimeout] = useState(0);
+  const sheduleHashing = () => {
+    clearTimeout(hashingTimeout);
+    setHashingTimeout(setTimeout(hash, 1000));
   };
 
   return (
@@ -47,13 +69,17 @@ export default function Hasher() {
         <TextInput
           label="Data to hash"
           value={hashInput}
-          onChange={(event) => hash(event.target.value)}
+          onChange={(event) => {
+            setHashInput(event.target.value);
+            sheduleHashing();
+          }}
         />
         <Combobox
           store={combobox}
           onOptionSubmit={(value) => {
             setHashFunctionName(value);
             combobox.closeDropdown();
+            sheduleHashing();
           }}
         >
           <Combobox.Target>
@@ -74,9 +100,10 @@ export default function Hasher() {
           <Combobox.Dropdown>
             <Combobox.Options>{hashFunctionComboboxOptions}</Combobox.Options>
           </Combobox.Dropdown>
-        </Combobox>
 
-        <Text>{hashResult}</Text>
+          <Text>Hex: {hashResultHex}</Text>
+          <Text>Base64: {hashResultBase64}</Text>
+        </Combobox>
       </Stack>
     </>
   );
