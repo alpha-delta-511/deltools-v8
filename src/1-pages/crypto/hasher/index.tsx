@@ -10,6 +10,7 @@ import {
 import sodium from "libsodium-wrappers-sumo";
 import { useEffect, useRef, useState } from "react";
 import { ALGORITHM_LIST, selectHasher } from "../../../5-shared/lib/hashing";
+import PageTitle from "../../../5-shared/lib/page-title";
 await sodium.ready;
 
 export default function Hasher() {
@@ -65,6 +66,10 @@ export default function Hasher() {
 
   return (
     <>
+      <PageTitle>
+        Hasher - hash any data with SHA256, SHA512 and other
+      </PageTitle>
+
       <Stack justify="start">
         <TextInput
           label="Data to hash"
