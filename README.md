@@ -2,6 +2,11 @@
 
 Simple tools for delevopers, system administrators and other.
 
+## Implemented tools
+
+- `crypto/`. Cryptographic tools.
+- - `hasher`. Simple hashing tool. Implemented functions: SHA256, SHA512. Loading files: not implemented.
+
 ## Self-hosting
 
 Installing:
