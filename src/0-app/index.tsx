@@ -62,6 +62,10 @@ const pages: Record<string, Page> = {
   },
 
   test: { component: lazy(() => import("../1-pages/test")) },
+
+  "crypto/hasher": {
+    component: lazy(() => import("../1-pages/crypto/hasher")),
+  },
 };
 
 const navbarData = [
@@ -81,6 +85,12 @@ const navbarData = [
         ],
       },
     ],
+  },
+
+  {
+    label: "crypto",
+    value: "crypto",
+    children: [{ label: "Hasher", value: "crypto/hasher" }],
   },
 ];
 
