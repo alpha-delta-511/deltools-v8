@@ -1,6 +1,14 @@
-import { Combobox, Stack, TextInput, useCombobox } from "@mantine/core";
+import {
+  Combobox,
+  Input,
+  InputBase,
+  Stack,
+  TextInput,
+  useCombobox,
+} from "@mantine/core";
 import sodium from "libsodium-wrappers-sumo";
 import { useState } from "react";
+import { ALGORITHM_LIST } from "../../../5-shared/lib/hashing";
 await sodium.ready;
 
 export default function Hasher() {
@@ -9,6 +17,13 @@ export default function Hasher() {
   });
 
   const [hashFunctionName, setHashFunctionName] = useState("sha256");
+  const hashFunctionComboboxOptions = Object.keys(ALGORITHM_LIST).map(
+    (item) => (
+      <Combobox.Option value={item} key={item}>
+        {item}
+      </Combobox.Option>
+    ),
+  );
 
   return (
     <>
@@ -20,7 +35,26 @@ export default function Hasher() {
             setHashFunctionName(value);
             combobox.closeDropdown();
           }}
-        ></Combobox>
+        >
+          <Combobox.Target>
+            <InputBase
+              component="button"
+              type="button"
+              pointer
+              rightSection={<Combobox.Chevron />}
+              rightSectionPointerEvents="none"
+              onClick={() => combobox.toggleDropdown()}
+            >
+              {hashFunctionName || (
+                <Input.Placeholder>Pick value</Input.Placeholder>
+              )}
+            </InputBase>
+          </Combobox.Target>
+
+          <Combobox.Dropdown>
+            <Combobox.Options>{hashFunctionComboboxOptions}</Combobox.Options>
+          </Combobox.Dropdown>
+        </Combobox>
       </Stack>
     </>
   );
