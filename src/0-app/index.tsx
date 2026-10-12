@@ -70,22 +70,6 @@ const pages: Record<string, Page> = {
 
 const navbarData = [
   { value: "welcome", label: "Welcome page" },
-  {
-    label: "programming",
-    value: "programming",
-    children: [
-      {
-        label: "frontend",
-        value: "frontend",
-        children: [
-          {
-            label: "CSS gradient generator",
-            value: "programming/frontend/css-gradient-generator",
-          },
-        ],
-      },
-    ],
-  },
 
   {
     label: "crypto",
