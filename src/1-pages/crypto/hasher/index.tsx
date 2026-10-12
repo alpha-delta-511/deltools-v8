@@ -3,12 +3,13 @@ import {
   Input,
   InputBase,
   Stack,
+  Text,
   TextInput,
   useCombobox,
 } from "@mantine/core";
 import sodium from "libsodium-wrappers-sumo";
 import { useState } from "react";
-import { ALGORITHM_LIST } from "../../../5-shared/lib/hashing";
+import { ALGORITHM_LIST, selectHasher } from "../../../5-shared/lib/hashing";
 await sodium.ready;
 
 export default function Hasher() {
@@ -25,10 +26,29 @@ export default function Hasher() {
     ),
   );
 
+  const [hashInput, setHashInput] = useState("");
+
+  const [hashResult, setHashResult] = useState("");
+
+  const hash = (value: string) => {
+    setHashInput(value);
+
+    const hasher = selectHasher(hashFunctionName);
+    const hash = hasher(value);
+
+    setHashResult(
+      `Hex: ${sodium.to_hex(hash)}\nBase64:${sodium.to_base64(hash)}`,
+    );
+  };
+
   return (
     <>
       <Stack justify="start">
-        <TextInput label="Data to hash" />
+        <TextInput
+          label="Data to hash"
+          value={hashInput}
+          onChange={(event) => hash(event.target.value)}
+        />
         <Combobox
           store={combobox}
           onOptionSubmit={(value) => {
@@ -55,6 +75,8 @@ export default function Hasher() {
             <Combobox.Options>{hashFunctionComboboxOptions}</Combobox.Options>
           </Combobox.Dropdown>
         </Combobox>
+
+        <Text>{hashResult}</Text>
       </Stack>
     </>
   );
